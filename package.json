@@ -1,6 +1,6 @@
 {
   "name": "tapsell-v3-cordova-plugin",
-  "version": "3.0.8",
+  "version": "3.0.9",
   "description": "Tapsell sdk v3 for cordova",
   "cordova": {
     "id": "tapsell-v3-cordova-plugin",
