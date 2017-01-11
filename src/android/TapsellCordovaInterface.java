@@ -1,0 +1,301 @@
+package ir.tapsell.sdk;
+
+import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaInterface;
+import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.CordovaWebView;
+import org.apache.cordova.PluginResult;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import android.app.Activity;
+import android.util.Log;
+import java.util.Collections;
+import java.util.List;
+import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.WeakHashMap;
+
+import ir.tapsell.sdk.TapsellCordovaListener;
+import ir.tapsell.sdk.TapsellCordova;
+import ir.tapsell.sdk.TapsellExtraPlatforms;
+
+public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCordovaListener {
+	
+	private static final String LOG_TAG = "TapsellCordova";
+	public CordovaInterface cordova = null;
+	
+	public static final int INITIALIZE_GET_PERMISSION_CODE = 0;
+	
+	private final Map<String,CallbackContext> zoneCallbacks = Collections.synchronizedMap(new WeakHashMap<String, CallbackContext>());
+
+    private CallbackContext defaultZoneCallback=null;
+	
+	private CallbackContext requestPermissionCallback=null;
+	private String appKeyCache = null;
+
+	@Override
+	public void initialize (CordovaInterface initCordova, CordovaWebView webView) {
+		 Log.e (LOG_TAG, "initialize");
+		  cordova = initCordova;
+		  super.initialize (cordova, webView);
+		  TapsellCordova.setCordovaListener(this);
+	}
+	
+	@Override
+	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+		if (action.equals("initialize")) {
+			initialize(args, CallbackContext);
+			return true;
+		}
+		else if (action.equals("requestAd")) {
+	    	requestAd(args, CallbackContext);
+		    return true;
+		}
+		else if (action.equals("isAdReadyToShow")) {
+			isAdReadyToShow(args, CallbackContext);
+		    return true;
+		}
+		else if (action.equals("getVersion")) {
+			getVersion(args, CallbackContext);
+		    return true;
+		}
+		else if (action.equals("showAd")) {
+			showAd(args, CallbackContext);
+		    return true;
+		}
+	    return false;
+	}
+	
+	private void initialize(JSONArray args, CallbackContext callbackContext) throws JSONException
+	{
+		if(cordova.hasPermission(android.Manifest.permission.READ_PHONE_STATE))
+		{
+			requestPermissionCallback = callbackContext;
+			appKeyCache = args.getString(0);
+			cordova.requestPermission(this, INITIALIZE_GET_PERMISSION_CODE, android.Manifest.permission.READ_PHONE_STATE);
+		}
+		else
+		{
+			final String appKey = args.getString(0);
+			TapsellExtraPlatforms.initialize(cordova.getActivity(),appKey);
+			CallbackContext.success();
+		}
+	}
+	
+	public void onRequestPermissionResult(int requestCode, String[] permissions,
+                                         int[] grantResults) throws JSONException
+	{
+		for(int r:grantResults)
+		{
+			if(r == PackageManager.PERMISSION_DENIED)
+			{
+				this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, "Error: Permission Denied"));
+				return;
+			}
+		}
+		switch(requestCode)
+		{
+			case INITIALIZE_GET_PERMISSION_CODE:
+				if(requestPermissionCallback!=null && appKeyCache!=null)
+				{
+					TapsellExtraPlatforms.initialize(cordova.getActivity(),appKeyCache);
+					requestPermissionCallback.success();
+					requestPermissionCallback = null;
+					appKeyCache= null;
+				}
+				break;
+		}
+	}
+	
+	private void requestAd(JSONArray args, CallbackContext callbackContext) throws JSONException
+	{
+		final String zoneId = args.getString(0);
+		if(zoneId!=null)
+		{
+			zoneCallbacks.put(zoneId,callbackContext);
+		}
+		else
+		{
+			defaultZoneCallback = callbackContext;
+		}
+		TapsellExtraPlatforms.requestAd(cordova.getActivity(),zoneId);
+	}
+	
+	private void isAdReadyToShow(JSONArray args, CallbackContext callbackContext) throws JSONException
+	{
+		final String zoneId = args.getString(0);
+		boolean isAdReady = TapsellExtraPlatforms.isAdReadyToShow(cordova.getActivity(),zoneId);
+		if(isAdReady)
+		{
+			callbackContext.success();
+		}
+		else
+		{
+			callbackContext.error("No ad is ready.");
+		}
+		return isAdReady;
+	}
+	
+	private String getVersion(JSONArray args, CallbackContext callbackContext) throws JSONException
+	{
+		String version = TapsellExtraPlatforms.getVersion();
+		JSONObject result = new JSONObject();
+		result.put("action","getVersion");
+		result.put("version",version);
+		PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
+	  	resultado.setKeepCallback(true);
+		callback.sendPluginResult(resultado);
+	}
+	
+	private void showAd(JSONArray args, CallbackContext callbackContext) throws JSONException
+	{
+		final String adId = args.getString(0);
+		final boolean back_disabled = args.getBoolean(1);
+		final boolean immersive_mode = args.getBoolean(2);
+		final int rotation_mode = args.getInteger(3);
+		TapsellExtraPlatforms.showAd(cordova.getActivity(),adId,back_disabled,immersive_mode,rotation_mode);
+		callbackContext.success();
+	}
+	
+	@Override
+    public void onAdShowFinished(String zoneId, String adId, boolean completed, boolean rewarded) {
+        JSONObject result = new JSONObject();
+		result.put("action","onAdShowFinished");
+		result.put("zoneId",zoneId);
+		result.put("adId",adId);
+		result.put("completed",completed);
+		result.put("rewarded",rewarded);
+		PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
+	  	resultado.setKeepCallback(true);
+		CallbackContext callback=null;
+		if(zoneId==null)
+		{
+			callback = defaultZoneCallback;
+		}
+		else
+		{
+			callback = zoneCallbacks.get(zoneId);
+		}
+		if(callback!=null)
+		{
+			callback.sendPluginResult(resultado);
+		}
+    }
+
+    @Override
+    public void onAdAvailable(String zoneId, String adId) {
+		JSONObject result = new JSONObject();
+		result.put("action","onAdAvailable");
+		result.put("zoneId",zoneId);
+		result.put("adId",adId);
+		PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
+	  	resultado.setKeepCallback(true);
+		CallbackContext callback=null;
+		if(zoneId==null)
+		{
+			callback = defaultZoneCallback;
+		}
+		else
+		{
+			callback = zoneCallbacks.get(zoneId);
+		}
+		if(callback!=null)
+		{
+			callback.sendPluginResult(resultado);
+		}
+    }
+
+    @Override
+    public void onError(String zoneId, String error) {
+		JSONObject result = new JSONObject();
+		result.put("action","onError");
+		result.put("zoneId",zoneId);
+		result.put("error",error);
+		PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
+	  	resultado.setKeepCallback(true);
+		CallbackContext callback=null;
+		if(zoneId==null)
+		{
+			callback = defaultZoneCallback;
+		}
+		else
+		{
+			callback = zoneCallbacks.get(zoneId);
+		}
+		if(callback!=null)
+		{
+			callback.sendPluginResult(resultado);
+		}
+    }
+
+    @Override
+    public void onNoAdAvailable(String zoneId) {
+		JSONObject result = new JSONObject();
+		result.put("action","onNoAdAvailable");
+		result.put("zoneId",zoneId);
+		PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
+	  	resultado.setKeepCallback(true);
+		CallbackContext callback=null;
+		if(zoneId==null)
+		{
+			callback = defaultZoneCallback;
+		}
+		else
+		{
+			callback = zoneCallbacks.get(zoneId);
+		}
+		if(callback!=null)
+		{
+			callback.sendPluginResult(resultado);
+		}
+    }
+
+    @Override
+    public void onNoNetwork(String zoneId) {
+		JSONObject result = new JSONObject();
+		result.put("action","onNoNetwork");
+		result.put("zoneId",zoneId);
+		PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
+	  	resultado.setKeepCallback(true);
+		CallbackContext callback=null;
+		if(zoneId==null)
+		{
+			callback = defaultZoneCallback;
+		}
+		else
+		{
+			callback = zoneCallbacks.get(zoneId);
+		}
+		if(callback!=null)
+		{
+			callback.sendPluginResult(resultado);
+		}
+    }
+
+    @Override
+    public void onExpiring(String zoneId, String adId) {
+		JSONObject result = new JSONObject();
+		result.put("action","onExpiring");
+		result.put("zoneId",zoneId);
+		result.put("adId",adId);
+		PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
+	  	resultado.setKeepCallback(true);
+		CallbackContext callback=null;
+		if(zoneId==null)
+		{
+			callback = defaultZoneCallback;
+		}
+		else
+		{
+			callback = zoneCallbacks.get(zoneId);
+		}
+		if(callback!=null)
+		{
+			callback.sendPluginResult(resultado);
+		}
+    }
+	
+
+}

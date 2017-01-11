@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="tapsell-v3-cordova-plugin"
+    version="3.0.1">
+	
+    <name>Tapsell sdk v3</name>
+    <description>Tapsell sdk v3 for cordova</description>
+    <author>Sina Rezaei (sinarezaei1991@gmail.com)</author>	
+    <license>Apache 2.0</license>
+    <keywords>tapsell,video,ad</keywords>
+    <repo>https://github.com/hermamitr/TapsellSDK_v3_Cordova</repo>
+    <issue>https://github.com/hermamitr/TapsellSDK_v3_Cordova/issues</issue>	
+	<engines>
+	    <engine name="cordova" version=">=3.0.0" />
+	</engines>
+ 	
+    <js-module src="www/tapsell.js">
+        <clobbers target="window.tapsell" />
+    </js-module>    
+    
+	<!-- android -->
+	<platform name="android">
+		<config-file target="res/xml/config.xml" parent="/*">
+			<feature name="TapsellVideo">
+				<param name="android-package" value="ir.tapsell.sdk.TapsellCordovaInterface"/>
+			</feature>
+		</config-file>
+
+		<config-file target="AndroidManifest.xml" parent="/*">
+			<uses-permission android:name="android.permission.INTERNET"></uses-permission>
+			<uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+			<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+		</config-file>
+
+		<config-file target="AndroidManifest.xml" parent="/manifest/application">
+			<activity android:name="ir.tapsell.sdk.TapsellAdActivity"
+                  android:configChanges="keyboardHidden|orientation|screenSize"/>
+		</config-file>
+
+		<source-file src="src/android/TapsellCordovaInterface.java" target-dir="src/ir/tapsell/sdk"/>
+		<source-file src="src/android/gson-2.8.0.jar" target-dir="libs" />
+		<source-file src="src/android/tapsell-cordova-3.0.1.jar" target-dir="libs" />
+	</platform>
+	
+</plugin>
