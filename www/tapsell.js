@@ -1,3 +1,8 @@
+
+var tapsell_rotation_locked_portrait = 1;
+var tapsell_rotation_locked_landscape = 2;
+var tapsell_rotation_unlocked = 3;
+
 module.exports = {
 	initialize: function(appKey) {
 		cordova.exec(function (result) {console.log("Tapsell initialized successfully.");},null,"TapsellCordovaInterface","initialize",[appKey]);
