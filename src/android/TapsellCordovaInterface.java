@@ -10,6 +10,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import android.app.Activity;
 import android.util.Log;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import java.util.Collections;
 import java.util.List;
 import java.util.Iterator;
@@ -26,15 +28,11 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 	private static final String LOG_TAG = "TapsellCordova";
 	public CordovaInterface cordova = null;
 	
-	public static final int INITIALIZE_GET_PERMISSION_CODE = 0;
 	
 	private final Map<String,CallbackContext> zoneCallbacks = Collections.synchronizedMap(new WeakHashMap<String, CallbackContext>());
 
     private CallbackContext defaultZoneCallback=null;
 	
-	private CallbackContext requestPermissionCallback=null;
-	private String appKeyCache = null;
-
 	@Override
 	public void initialize (CordovaInterface initCordova, CordovaWebView webView) {
 		 Log.e (LOG_TAG, "initialize");
@@ -46,67 +44,48 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 	@Override
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		if (action.equals("initialize")) {
-			initialize(args, CallbackContext);
+			initialize(args, callbackContext);
 			return true;
 		}
 		else if (action.equals("requestAd")) {
-	    	requestAd(args, CallbackContext);
+	    	requestAd(args, callbackContext);
 		    return true;
 		}
 		else if (action.equals("isAdReadyToShow")) {
-			isAdReadyToShow(args, CallbackContext);
+			isAdReadyToShow(args, callbackContext);
 		    return true;
 		}
 		else if (action.equals("getVersion")) {
-			getVersion(args, CallbackContext);
+			getVersion(args, callbackContext);
 		    return true;
 		}
 		else if (action.equals("showAd")) {
-			showAd(args, CallbackContext);
+			showAd(args, callbackContext);
 		    return true;
+		}
+		else if (action.equals("getAndroidVersion")) {
+			getAndroidVersion(args, callbackContext);
+			return true;
 		}
 	    return false;
 	}
 	
-	private void initialize(JSONArray args, CallbackContext callbackContext) throws JSONException
+	private void getAndroidVersion(JSONArray args, CallbackContext callbackContext) throws JSONException
 	{
-		if(cordova.hasPermission(android.Manifest.permission.READ_PHONE_STATE))
-		{
-			requestPermissionCallback = callbackContext;
-			appKeyCache = args.getString(0);
-			cordova.requestPermission(this, INITIALIZE_GET_PERMISSION_CODE, android.Manifest.permission.READ_PHONE_STATE);
-		}
-		else
-		{
-			final String appKey = args.getString(0);
-			TapsellExtraPlatforms.initialize(cordova.getActivity(),appKey);
-			CallbackContext.success();
-		}
+		String version = TapsellExtraPlatforms.getVersion();
+		JSONObject result = new JSONObject();
+		result.put("action","getAndroidVersion");
+		result.put("androidVersion",Build.VERSION.SDK_INT);
+		PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
+	  	resultado.setKeepCallback(true);
+		callbackContext.sendPluginResult(resultado);
 	}
 	
-	public void onRequestPermissionResult(int requestCode, String[] permissions,
-                                         int[] grantResults) throws JSONException
+	private void initialize(JSONArray args, CallbackContext callbackContext) throws JSONException
 	{
-		for(int r:grantResults)
-		{
-			if(r == PackageManager.PERMISSION_DENIED)
-			{
-				this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, "Error: Permission Denied"));
-				return;
-			}
-		}
-		switch(requestCode)
-		{
-			case INITIALIZE_GET_PERMISSION_CODE:
-				if(requestPermissionCallback!=null && appKeyCache!=null)
-				{
-					TapsellExtraPlatforms.initialize(cordova.getActivity(),appKeyCache);
-					requestPermissionCallback.success();
-					requestPermissionCallback = null;
-					appKeyCache= null;
-				}
-				break;
-		}
+		final String appKey = args.getString(0);
+		TapsellExtraPlatforms.initialize(cordova.getActivity(),appKey);
+		callbackContext.success();
 	}
 	
 	private void requestAd(JSONArray args, CallbackContext callbackContext) throws JSONException
@@ -135,7 +114,6 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 		{
 			callbackContext.error("No ad is ready.");
 		}
-		return isAdReady;
 	}
 	
 	private String getVersion(JSONArray args, CallbackContext callbackContext) throws JSONException
@@ -146,7 +124,7 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 		result.put("version",version);
 		PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
 	  	resultado.setKeepCallback(true);
-		callback.sendPluginResult(resultado);
+		callbackContext.sendPluginResult(resultado);
 	}
 	
 	private void showAd(JSONArray args, CallbackContext callbackContext) throws JSONException
