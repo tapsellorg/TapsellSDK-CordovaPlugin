@@ -1,7 +1,7 @@
 
-var tapsell_rotation_locked_portrait = 1;
-var tapsell_rotation_locked_landscape = 2;
-var tapsell_rotation_unlocked = 3;
+window.tapsell_rotation_locked_portrait = 1;
+window.tapsell_rotation_locked_landscape = 2;
+window.tapsell_rotation_unlocked = 3;
 
 module.exports = {
 	initialize: function(appKey) {
