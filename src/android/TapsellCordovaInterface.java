@@ -90,7 +90,9 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 	
 	private void requestAd(JSONArray args, CallbackContext callbackContext) throws JSONException
 	{
+		Log.e("tapsell","requestAd called");
 		final String zoneId = args.getString(0);
+		Log.e("tapsell","requestAd zoneId="+zoneId);
 		if(zoneId!=null)
 		{
 			zoneCallbacks.put(zoneId,callbackContext);
@@ -129,7 +131,9 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 	
 	private void showAd(JSONArray args, CallbackContext callbackContext) throws JSONException
 	{
+		Log.e("tapsell","showAd called");
 		final String adId = args.getString(0);
+		Log.e("tapsell","showAd adId = "+adId);
 		final boolean back_disabled = args.getBoolean(1);
 		final boolean immersive_mode = args.getBoolean(2);
 		final int rotation_mode = args.getInt(3);
