@@ -132,7 +132,7 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 		final String adId = args.getString(0);
 		final boolean back_disabled = args.getBoolean(1);
 		final boolean immersive_mode = args.getBoolean(2);
-		final int rotation_mode = args.getInteger(3);
+		final int rotation_mode = args.getInt(3);
 		TapsellExtraPlatforms.showAd(cordova.getActivity(),adId,back_disabled,immersive_mode,rotation_mode);
 		callbackContext.success();
 	}
