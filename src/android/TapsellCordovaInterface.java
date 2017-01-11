@@ -140,138 +140,171 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 	@Override
     public void onAdShowFinished(String zoneId, String adId, boolean completed, boolean rewarded) {
         JSONObject result = new JSONObject();
-		result.put("action","onAdShowFinished");
-		result.put("zoneId",zoneId);
-		result.put("adId",adId);
-		result.put("completed",completed);
-		result.put("rewarded",rewarded);
-		PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
-	  	resultado.setKeepCallback(true);
-		CallbackContext callback=null;
-		if(zoneId==null)
+		try{
+			result.put("action","onAdShowFinished");
+			result.put("zoneId",zoneId);
+			result.put("adId",adId);
+			result.put("completed",completed);
+			result.put("rewarded",rewarded);
+			PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
+			resultado.setKeepCallback(true);
+			CallbackContext callback=null;
+			if(zoneId==null)
+			{
+				callback = defaultZoneCallback;
+			}
+			else
+			{
+				callback = zoneCallbacks.get(zoneId);
+			}
+			if(callback!=null)
+			{
+				callback.sendPluginResult(resultado);
+			}
+		}catch(JSONException e)
 		{
-			callback = defaultZoneCallback;
+			e.printStackTrace();
 		}
-		else
-		{
-			callback = zoneCallbacks.get(zoneId);
-		}
-		if(callback!=null)
-		{
-			callback.sendPluginResult(resultado);
-		}
+		
     }
 
     @Override
     public void onAdAvailable(String zoneId, String adId) {
 		JSONObject result = new JSONObject();
-		result.put("action","onAdAvailable");
-		result.put("zoneId",zoneId);
-		result.put("adId",adId);
-		PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
-	  	resultado.setKeepCallback(true);
-		CallbackContext callback=null;
-		if(zoneId==null)
+		try{
+			result.put("action","onAdAvailable");
+			result.put("zoneId",zoneId);
+			result.put("adId",adId);
+			PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
+			resultado.setKeepCallback(true);
+			CallbackContext callback=null;
+			if(zoneId==null)
+			{
+				callback = defaultZoneCallback;
+			}
+			else
+			{
+				callback = zoneCallbacks.get(zoneId);
+			}
+			if(callback!=null)
+			{
+				callback.sendPluginResult(resultado);
+			}
+		}catch(JSONException e)
 		{
-			callback = defaultZoneCallback;
-		}
-		else
-		{
-			callback = zoneCallbacks.get(zoneId);
-		}
-		if(callback!=null)
-		{
-			callback.sendPluginResult(resultado);
+			e.printStackTrace();
 		}
     }
 
     @Override
     public void onError(String zoneId, String error) {
 		JSONObject result = new JSONObject();
-		result.put("action","onError");
-		result.put("zoneId",zoneId);
-		result.put("error",error);
-		PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
-	  	resultado.setKeepCallback(true);
-		CallbackContext callback=null;
-		if(zoneId==null)
+		try{
+			result.put("action","onError");
+			result.put("zoneId",zoneId);
+			result.put("error",error);
+			PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
+			resultado.setKeepCallback(true);
+			CallbackContext callback=null;
+			if(zoneId==null)
+			{
+				callback = defaultZoneCallback;
+			}
+			else
+			{
+				callback = zoneCallbacks.get(zoneId);
+			}
+			if(callback!=null)
+			{
+				callback.sendPluginResult(resultado);
+			}
+
+		}catch(JSONException e)
 		{
-			callback = defaultZoneCallback;
-		}
-		else
-		{
-			callback = zoneCallbacks.get(zoneId);
-		}
-		if(callback!=null)
-		{
-			callback.sendPluginResult(resultado);
+			e.printStackTrace();
 		}
     }
 
     @Override
     public void onNoAdAvailable(String zoneId) {
 		JSONObject result = new JSONObject();
-		result.put("action","onNoAdAvailable");
-		result.put("zoneId",zoneId);
-		PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
-	  	resultado.setKeepCallback(true);
-		CallbackContext callback=null;
-		if(zoneId==null)
+		try{
+			result.put("action","onNoAdAvailable");
+			result.put("zoneId",zoneId);
+			PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
+			resultado.setKeepCallback(true);
+			CallbackContext callback=null;
+			if(zoneId==null)
+			{
+				callback = defaultZoneCallback;
+			}
+			else
+			{
+				callback = zoneCallbacks.get(zoneId);
+			}
+			if(callback!=null)
+			{
+				callback.sendPluginResult(resultado);
+			}
+
+		}catch(JSONException e)
 		{
-			callback = defaultZoneCallback;
-		}
-		else
-		{
-			callback = zoneCallbacks.get(zoneId);
-		}
-		if(callback!=null)
-		{
-			callback.sendPluginResult(resultado);
+			e.printStackTrace();
 		}
     }
 
     @Override
     public void onNoNetwork(String zoneId) {
 		JSONObject result = new JSONObject();
-		result.put("action","onNoNetwork");
-		result.put("zoneId",zoneId);
-		PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
-	  	resultado.setKeepCallback(true);
-		CallbackContext callback=null;
-		if(zoneId==null)
+		try{
+			result.put("action","onNoNetwork");
+			result.put("zoneId",zoneId);
+			PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
+			resultado.setKeepCallback(true);
+			CallbackContext callback=null;
+			if(zoneId==null)
+			{
+				callback = defaultZoneCallback;
+			}
+			else
+			{
+				callback = zoneCallbacks.get(zoneId);
+			}
+			if(callback!=null)
+			{
+				callback.sendPluginResult(resultado);
+			}
+		}catch(JSONException e)
 		{
-			callback = defaultZoneCallback;
-		}
-		else
-		{
-			callback = zoneCallbacks.get(zoneId);
-		}
-		if(callback!=null)
-		{
-			callback.sendPluginResult(resultado);
+			e.printStackTrace();
 		}
     }
 
     @Override
     public void onExpiring(String zoneId, String adId) {
 		JSONObject result = new JSONObject();
-		result.put("action","onExpiring");
-		result.put("zoneId",zoneId);
-		result.put("adId",adId);
-		PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
-	  	resultado.setKeepCallback(true);
-		CallbackContext callback=null;
-		if(zoneId==null)
+		try{
+			result.put("action","onExpiring");
+			result.put("zoneId",zoneId);
+			result.put("adId",adId);
+			PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
+			resultado.setKeepCallback(true);
+			CallbackContext callback=null;
+			if(zoneId==null)
+			{
+				callback = defaultZoneCallback;
+			}
+			else
+			{
+				callback = zoneCallbacks.get(zoneId);
+			}
+			if(callback!=null)
+			{
+				callback.sendPluginResult(resultado);
+			}
+		}catch(JSONException e)
 		{
-			callback = defaultZoneCallback;
-		}
-		else
-		{
-			callback = zoneCallbacks.get(zoneId);
-		}
-		if(callback!=null)
-		{
-			callback.sendPluginResult(resultado);
+			e.printStackTrace();
 		}
     }
 	
