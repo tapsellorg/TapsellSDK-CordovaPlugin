@@ -116,7 +116,7 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 		}
 	}
 	
-	private String getVersion(JSONArray args, CallbackContext callbackContext) throws JSONException
+	private void getVersion(JSONArray args, CallbackContext callbackContext) throws JSONException
 	{
 		String version = TapsellExtraPlatforms.getVersion();
 		JSONObject result = new JSONObject();
