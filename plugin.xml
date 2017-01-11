@@ -22,7 +22,7 @@
 	<!-- android -->
 	<platform name="android">
 		<config-file target="res/xml/config.xml" parent="/*">
-			<feature name="TapsellVideo">
+			<feature name="TapsellCordovaInterface">
 				<param name="android-package" value="ir.tapsell.sdk.TapsellCordovaInterface"/>
 			</feature>
 		</config-file>
