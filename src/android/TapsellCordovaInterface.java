@@ -200,7 +200,7 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 	{
 		if(cordova.getActivity()!=null && cordova.getActivity() instanceof TapsellAdActivity)
 		{
-			((TapsellAdActivity)cordova.getActivity).onBackPressed();
+			((TapsellAdActivity)(cordova.getActivity())).onBackPressed();
 		}
 	}
 	
@@ -208,7 +208,7 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 	{
 		if(cordova.getActivity()!=null && cordova.getActivity() instanceof TapsellAdActivity)
 		{
-			((TapsellAdActivity)cordova.getActivity).replayVideo();
+			((TapsellAdActivity)(cordova.getActivity())).replayVideo();
 		}
 	}
 	
