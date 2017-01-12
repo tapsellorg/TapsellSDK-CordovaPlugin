@@ -12,6 +12,9 @@ import android.app.Activity;
 import android.util.Log;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.content.Intent;
+import android.net.Uri;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Iterator;
@@ -23,6 +26,7 @@ import ir.tapsell.sdk.TapsellCordovaListener;
 import ir.tapsell.sdk.TapsellCordova;
 import ir.tapsell.sdk.TapsellExtraPlatforms;
 import ir.tapsell.sdk.TapsellAdActivity;
+
 
 public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCordovaListener {
 	
@@ -87,11 +91,15 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 	{
 		String version = TapsellExtraPlatforms.getVersion();
 		JSONObject result = new JSONObject();
-		result.put("action","getAndroidVersion");
-		result.put("androidVersion",Build.VERSION.SDK_INT);
-		PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
-	  	resultado.setKeepCallback(true);
-		callbackContext.sendPluginResult(resultado);
+		try{
+			result.put("action","getAndroidVersion");
+			result.put("androidVersion",Build.VERSION.SDK_INT);
+			PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
+			resultado.setKeepCallback(true);
+			callbackContext.sendPluginResult(resultado);
+		} catch (Exception e) {
+            e.printStackTrace();
+        }
 	}
 	
 	private void initialize(JSONArray args, CallbackContext callbackContext) throws JSONException
@@ -135,11 +143,15 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 	{
 		String version = TapsellExtraPlatforms.getVersion();
 		JSONObject result = new JSONObject();
-		result.put("action","getVersion");
-		result.put("version",version);
-		PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
-	  	resultado.setKeepCallback(true);
-		callbackContext.sendPluginResult(resultado);
+		try{
+			result.put("action","getVersion");
+			result.put("version",version);
+			PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
+			resultado.setKeepCallback(true);
+			callbackContext.sendPluginResult(resultado);
+		} catch (Exception e) {
+            e.printStackTrace();
+        }
 	}
 	
 	private void showAd(JSONArray args, CallbackContext callbackContext) throws JSONException
@@ -157,9 +169,14 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 	private void startIntent(JSONArray args, CallbackContext callbackContext) throws JSONException
 	{
 		Log.e("tapsell","startIntent called");
-		var REQUEST_CODE_TO_BE_IGNORED = -103;
-		var MIN_PACKAGE_LENGTH = -1;
+		int REQUEST_CODE_TO_BE_IGNORED = -103;
+		int MIN_PACKAGE_LENGTH = -1;
 		try {
+			String actionType = args.getString(0);
+			String uri = args.getString(1);
+			String isService = args.getString(2);
+			String requestCode = args.getString(3);
+			String packageName = args.getString(4);
             Intent intent = new Intent(actionType, Uri.parse(uri));
             if (packageName != null
                     && packageName.length() >= MIN_PACKAGE_LENGTH) {
