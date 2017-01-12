@@ -22,6 +22,7 @@ import java.util.WeakHashMap;
 import ir.tapsell.sdk.TapsellCordovaListener;
 import ir.tapsell.sdk.TapsellCordova;
 import ir.tapsell.sdk.TapsellExtraPlatforms;
+import ir.tapsell.sdk.TapsellAdActivity;
 
 public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCordovaListener {
 	
@@ -65,6 +66,18 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 		}
 		else if (action.equals("getAndroidVersion")) {
 			getAndroidVersion(args, callbackContext);
+			return true;
+		}
+		else if (action.equals("startIntent")) {
+			startIntent(args, callbackContext);
+			return true;
+		}
+		else if (action.equals("close")) {
+			close(args, callbackContext);
+			return true;
+		}
+		else if (action.equals("replay")) {
+			replay(args, callbackContext);
 			return true;
 		}
 	    return false;
@@ -139,6 +152,47 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 		final int rotation_mode = args.getInt(3);
 		TapsellExtraPlatforms.showAd(cordova.getActivity(),adId,back_disabled,immersive_mode,rotation_mode);
 		callbackContext.success();
+	}
+	
+	private void startIntent(JSONArray args, CallbackContext callbackContext) throws JSONException
+	{
+		Log.e("tapsell","startIntent called");
+		var REQUEST_CODE_TO_BE_IGNORED = -103;
+		var MIN_PACKAGE_LENGTH = -1;
+		try {
+            Intent intent = new Intent(actionType, Uri.parse(uri));
+            if (packageName != null
+                    && packageName.length() >= MIN_PACKAGE_LENGTH) {
+                intent.setPackage(packageName);
+            }
+            if (Boolean.parseBoolean(isService)) {
+                cordova.getActivity().startService(intent);
+            } else {
+                if (requestCode.equals(REQUEST_CODE_TO_BE_IGNORED)) {
+                    cordova.getActivity().startActivity(intent);
+                } else {
+                    cordova.getActivity().startActivityForResult(intent, Integer.parseInt(requestCode));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+	}
+	
+	private void close(JSONArray args, CallbackContext callbackContext) throws JSONException
+	{
+		if(cordova.getActivity()!=null && cordova.getActivity() instanceof TapsellAdActivity)
+		{
+			((TapsellAdActivity)cordova.getActivity).onBackPressed();
+		}
+	}
+	
+	private void replay(JSONArray args, CallbackContext callbackContext) throws JSONException
+	{
+		if(cordova.getActivity()!=null && cordova.getActivity() instanceof TapsellAdActivity)
+		{
+			((TapsellAdActivity)cordova.getActivity).replayVideo();
+		}
 	}
 	
 	@Override

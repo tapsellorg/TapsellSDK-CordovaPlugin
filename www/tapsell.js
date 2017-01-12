@@ -15,5 +15,14 @@ module.exports = {
 	},
 	showAd: function(adId,back_disabled,immersive_mode,rotation_mode, callback) {
 		cordova.exec(callback, null, "TapsellCordovaInterface", "showAd", [ adId,back_disabled,immersive_mode,rotation_mode ]);		
+	},
+	startIntent: function(actionType,uri,isService,requestCode,packageName) {
+		cordova.exec(null,null,"TapsellCordovaInterface","startIntent",[ actionType,uri,isService,requestCode,packageName ]);
+	},
+	close: function() {
+		cordova.exec(null,null,"TapsellCordovaInterface","close",[ 0 ]);
+	},
+	replay: function() {
+		cordova.exec(null,null,"TapsellCordovaInterface","replay",[ 0 ]);
 	}
 };
