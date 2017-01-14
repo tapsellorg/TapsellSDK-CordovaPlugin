@@ -38,6 +38,8 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 
     private CallbackContext defaultZoneCallback=null;
 	
+	private CallbackContext adRewardCallback=null;
+	
 	@Override
 	public void initialize (CordovaInterface initCordova, CordovaWebView webView) {
 		 Log.e (LOG_TAG, "initialize");
@@ -159,7 +161,7 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 		final boolean immersive_mode = args.getBoolean(2);
 		final int rotation_mode = args.getInt(3);
 		TapsellExtraPlatforms.showAd(cordova.getActivity(),adId,back_disabled,immersive_mode,rotation_mode);
-		callbackContext.success();
+		adRewardCallback = callbackContext;
 	}
 	
 	private void startIntent(JSONArray args, CallbackContext callbackContext) throws JSONException
@@ -219,15 +221,7 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 			result.put("rewarded",rewarded);
 			PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
 			resultado.setKeepCallback(true);
-			CallbackContext callback=null;
-			if(zoneId==null)
-			{
-				callback = defaultZoneCallback;
-			}
-			else
-			{
-				callback = zoneCallbacks.get(zoneId);
-			}
+			CallbackContext callback=adRewardCallback;
 			if(callback!=null)
 			{
 				callback.sendPluginResult(resultado);
