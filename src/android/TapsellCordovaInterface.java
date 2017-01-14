@@ -154,7 +154,7 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 	
 	private void showAd(JSONArray args, CallbackContext callbackContext) throws JSONException
 	{
-		final String adId = args.getString(0)
+		final String adId = args.getString(0);
 		final boolean back_disabled = args.getBoolean(1);
 		final boolean immersive_mode = args.getBoolean(2);
 		final int rotation_mode = args.getInt(3);
