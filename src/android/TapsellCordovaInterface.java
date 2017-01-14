@@ -111,9 +111,7 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 	
 	private void requestAd(JSONArray args, CallbackContext callbackContext) throws JSONException
 	{
-		Log.e("tapsell","requestAd called");
 		final String zoneId = args.getString(0);
-		Log.e("tapsell","requestAd zoneId="+zoneId);
 		if(zoneId!=null)
 		{
 			zoneCallbacks.put(zoneId,callbackContext);
@@ -156,9 +154,7 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 	
 	private void showAd(JSONArray args, CallbackContext callbackContext) throws JSONException
 	{
-		Log.e("tapsell","showAd called");
-		final String adId = args.getString(0);
-		Log.e("tapsell","showAd adId = "+adId);
+		final String adId = args.getString(0)
 		final boolean back_disabled = args.getBoolean(1);
 		final boolean immersive_mode = args.getBoolean(2);
 		final int rotation_mode = args.getInt(3);
@@ -168,7 +164,6 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 	
 	private void startIntent(JSONArray args, CallbackContext callbackContext) throws JSONException
 	{
-		Log.e("tapsell","startIntent called");
 		int REQUEST_CODE_TO_BE_IGNORED = -103;
 		int MIN_PACKAGE_LENGTH = -1;
 		try {
@@ -215,6 +210,7 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 	@Override
     public void onAdShowFinished(String zoneId, String adId, boolean completed, boolean rewarded) {
         JSONObject result = new JSONObject();
+		Log.e('tapsell','onAdShowFinished called, zoneId = '+zoneId);
 		try{
 			result.put("action","onAdShowFinished");
 			result.put("zoneId",zoneId);
