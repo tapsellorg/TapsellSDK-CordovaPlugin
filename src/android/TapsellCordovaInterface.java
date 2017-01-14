@@ -210,7 +210,7 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 	@Override
     public void onAdShowFinished(String zoneId, String adId, boolean completed, boolean rewarded) {
         JSONObject result = new JSONObject();
-		Log.e('tapsell','onAdShowFinished called, zoneId = '+zoneId);
+		Log.e("tapsell","onAdShowFinished called, zoneId = "+zoneId);
 		try{
 			result.put("action","onAdShowFinished");
 			result.put("zoneId",zoneId);
