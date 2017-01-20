@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="tapsell-v3-cordova-plugin"
-    version="3.0.21">
+    version="3.0.22">
 	
     <name>Tapsell sdk v3</name>
     <description>Tapsell sdk v3 for cordova</description>
