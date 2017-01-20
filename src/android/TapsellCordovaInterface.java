@@ -113,7 +113,7 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 	
 	private void requestAd(JSONArray args, CallbackContext callbackContext) throws JSONException
 	{
-		final String zoneId = args.getString(0);
+		String zoneId = args.getString(0);
 		if(zoneId!=null && (zoneId.equalsIgnoreCase("null") || zoneId.equalsIgnoreCase("")))
 		{
 			zoneId = null;
