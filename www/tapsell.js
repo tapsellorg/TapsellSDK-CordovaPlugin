@@ -7,8 +7,8 @@ module.exports = {
 	initialize: function(appKey) {
 		cordova.exec(function (result) {console.log("Tapsell initialized successfully.");},null,"TapsellCordovaInterface","initialize",[appKey]);
 	},
-	requestAd: function(zoneId, callback) {
-		cordova.exec(callback, null, "TapsellCordovaInterface", "requestAd", [ zoneId ]);		
+	requestAd: function(zoneId, icCached, callback) {
+		cordova.exec(callback, null, "TapsellCordovaInterface", "requestAd", [ zoneId , icCached]);		
 	},
 	isAdReadyToShow: function(zoneId, callback) {
 		cordova.exec(callback, null, "TapsellCordovaInterface", "isAdReadyToShow", [ zoneId ]);		
