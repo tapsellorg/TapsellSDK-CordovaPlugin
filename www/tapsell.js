@@ -22,22 +22,22 @@ module.exports = {
 		cordova.exec(callback, null, "TapsellCordovaInterface", "getVersion", [ 0 ]);		
 	},
 	setDebugMode: function( debug ) {
-		cordova.exec(callback, null, "TapsellCordovaInterface", "setDebugMode", [ debug ]);
+		cordova.exec(null, null, "TapsellCordovaInterface", "setDebugMode", [ debug ]);
 	},
 	setAppUserId: function ( appUserId) {
-		cordova.exec(callback, null, "TapsellCordovaInterface", "setAppUserId", [ appUserId ]);
+		cordova.exec(null, null, "TapsellCordovaInterface", "setAppUserId", [ appUserId ]);
 	},
 	setAutoHandlePermissions: function( handle ) {
-		cordova.exec(callback, null, "TapsellCordovaInterface", "setAutoHandlePermissions", [ handle ]);
+		cordova.exec(null, null, "TapsellCordovaInterface", "setAutoHandlePermissions", [ handle ]);
 	},
 	setMaxAllowedBandwidthUsage: function( maxBpsSpeed ) {
-		cordova.exec(callback, null, "TapsellCordovaInterface", "setMaxAllowedBandwidthUsage", [ maxBpsSpeed ]);
+		cordova.exec(null, null, "TapsellCordovaInterface", "setMaxAllowedBandwidthUsage", [ maxBpsSpeed ]);
 	},
 	setMaxAllowedBandwidthUsagePercentage: function( maxPercentage ) {
-		cordova.exec(callback, null, "TapsellCordovaInterface", "setMaxAllowedBandwidthUsagePercentage", [ maxPercentage ]);
+		cordova.exec(null, null, "TapsellCordovaInterface", "setMaxAllowedBandwidthUsagePercentage", [ maxPercentage ]);
 	},
 	clearBandwidthUsageConstrains: function( maxBpsSpeed ) {
-		cordova.exec(callback, null, "TapsellCordovaInterface", "clearBandwidthUsageConstrains", [ 0 ]);
+		cordova.exec(null, null, "TapsellCordovaInterface", "clearBandwidthUsageConstrains", [ 0 ]);
 	},
 	startIntent: function(actionType,uri,isService,requestCode,packageName) {
 		cordova.exec(null,null,"TapsellCordovaInterface","startIntent",[ actionType,uri,isService,requestCode,packageName ]);
