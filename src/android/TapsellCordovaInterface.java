@@ -74,6 +74,30 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 			getAndroidVersion(args, callbackContext);
 			return true;
 		}
+		else if (action.equals("setDebugMode")) {
+			setDebugMode(args, callbackContext);
+			return true;
+		}
+		else if (action.equals("setMaxAllowedBandwidthUsage")) {
+			setMaxAllowedBandwidthUsage(args, callbackContext);
+			return true;
+		}
+		else if (action.equals("setMaxAllowedBandwidthUsagePercentage")) {
+			setMaxAllowedBandwidthUsagePercentage(args, callbackContext);
+			return true;
+		}
+		else if (action.equals("clearBandwidthUsageConstrains")) {
+			clearBandwidthUsageConstrains(args, callbackContext);
+			return true;
+		}
+		else if (action.equals("setAutoHandlePermissions")) {
+			setAutoHandlePermissions(args, callbackContext);
+			return true;
+		}
+		else if (action.equals("setAppUserId")) {
+			setAppUserId(args, callbackContext);
+			return true;
+		}
 		else if (action.equals("startIntent")) {
 			startIntent(args, callbackContext);
 			return true;
@@ -91,11 +115,65 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 	
 	private void getAndroidVersion(JSONArray args, CallbackContext callbackContext) throws JSONException
 	{
-		String version = TapsellExtraPlatforms.getVersion();
 		JSONObject result = new JSONObject();
 		try{
 			result.put("action","getAndroidVersion");
 			result.put("androidVersion",Build.VERSION.SDK_INT);
+			PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
+			resultado.setKeepCallback(true);
+			callbackContext.sendPluginResult(resultado);
+		} catch (Exception e) {
+            e.printStackTrace();
+        }
+	}
+	
+	private void setDebugMode(JSONArray args, CallbackContext callbackContext) throws JSONException
+	{
+		final boolean debug = args.getBoolean(0);
+		TapsellExtraPlatforms.setDebugMode(cordova.getActivity(), debug);
+		callbackContext.success();
+	}
+	
+	private void setAppUserId(JSONArray args, CallbackContext callbackContext) throws JSONException
+	{
+		final String appUserId = args.getString(0);
+		TapsellExtraPlatforms.setAppUserId(cordova.getActivity(), appUserId);
+		callbackContext.success();
+	}
+	
+	private void setAutoHandlePermissions(JSONArray args, CallbackContext callbackContext) throws JSONException
+	{
+		final boolean handle = args.getBoolean(0);
+		TapsellExtraPlatforms.setAutoHandlePermissions(cordova.getActivity(), handle);
+		callbackContext.success();
+	}
+	
+	private void setMaxAllowedBandwidthUsage(JSONArray args, CallbackContext callbackContext) throws JSONException
+	{
+		final long maxBpsSpeed = args.getLong(0);
+		TapsellExtraPlatforms.setMaxAllowedBandwidthUsage(cordova.getActivity(), maxBpsSpeed);
+		callbackContext.success();
+	}
+	
+	private void setMaxAllowedBandwidthUsagePercentage(JSONArray args, CallbackContext callbackContext) throws JSONException
+	{
+		final long maxPercentage = args.getInt(0);
+		TapsellExtraPlatforms.setMaxAllowedBandwidthUsagePercentage(cordova.getActivity(), maxPercentage);
+		callbackContext.success();
+	}
+	
+	private void clearBandwidthUsageConstrains(JSONArray args, CallbackContext callbackContext) throws JSONException
+	{
+		TapsellExtraPlatforms.clearBandwidthUsageConstrains(cordova.getActivity());
+		callbackContext.success();
+	}
+	
+	private void isDebugMode(JSONArray args, CallbackContext callbackContext)
+	{
+		JSONObject result = new JSONObject();
+		try{
+			result.put("action","isDebugMode");
+			result.put("debug",TapsellExtraPlatforms.isDebugMode(cordova.getActivity()));
 			PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
 			resultado.setKeepCallback(true);
 			callbackContext.sendPluginResult(resultado);
@@ -165,7 +243,8 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 		final boolean back_disabled = args.getBoolean(1);
 		final boolean immersive_mode = args.getBoolean(2);
 		final int rotation_mode = args.getInt(3);
-		TapsellExtraPlatforms.showAd(cordova.getActivity(),adId,back_disabled,immersive_mode,rotation_mode);
+		final boolean show_dialog = args.getBoolean(4);
+		TapsellExtraPlatforms.showAd(cordova.getActivity(),adId,back_disabled,immersive_mode,rotation_mode, show_dialog);
 		adRewardCallback = callbackContext;
 	}
 	

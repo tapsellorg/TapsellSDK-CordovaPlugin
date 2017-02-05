@@ -15,8 +15,29 @@ module.exports = {
 	isAdReadyToShow: function(zoneId, callback) {
 		cordova.exec(callback, null, "TapsellCordovaInterface", "isAdReadyToShow", [ zoneId ]);		
 	},
-	showAd: function(adId,back_disabled,immersive_mode,rotation_mode, callback) {
-		cordova.exec(callback, null, "TapsellCordovaInterface", "showAd", [ adId,back_disabled,immersive_mode,rotation_mode ]);		
+	showAd: function(adId,back_disabled,immersive_mode,rotation_mode, show_dialog, callback) {
+		cordova.exec(callback, null, "TapsellCordovaInterface", "showAd", [ adId,back_disabled,immersive_mode,rotation_mode,show_dialog ]);		
+	},
+	getVersion: function( callback ) {
+		cordova.exec(callback, null, "TapsellCordovaInterface", "getVersion", [ 0 ]);		
+	},
+	setDebugMode: function( debug ) {
+		cordova.exec(callback, null, "TapsellCordovaInterface", "setDebugMode", [ debug ]);
+	},
+	setAppUserId: function ( appUserId) {
+		cordova.exec(callback, null, "TapsellCordovaInterface", "setAppUserId", [ appUserId ]);
+	},
+	setAutoHandlePermissions: function( handle ) {
+		cordova.exec(callback, null, "TapsellCordovaInterface", "setAutoHandlePermissions", [ handle ]);
+	},
+	setMaxAllowedBandwidthUsage: function( maxBpsSpeed ) {
+		cordova.exec(callback, null, "TapsellCordovaInterface", "setMaxAllowedBandwidthUsage", [ maxBpsSpeed ]);
+	},
+	setMaxAllowedBandwidthUsagePercentage: function( maxPercentage ) {
+		cordova.exec(callback, null, "TapsellCordovaInterface", "setMaxAllowedBandwidthUsagePercentage", [ maxPercentage ]);
+	},
+	clearBandwidthUsageConstrains: function( maxBpsSpeed ) {
+		cordova.exec(callback, null, "TapsellCordovaInterface", "clearBandwidthUsageConstrains", [ 0 ]);
 	},
 	startIntent: function(actionType,uri,isService,requestCode,packageName) {
 		cordova.exec(null,null,"TapsellCordovaInterface","startIntent",[ actionType,uri,isService,requestCode,packageName ]);
