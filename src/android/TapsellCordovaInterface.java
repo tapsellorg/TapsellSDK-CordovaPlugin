@@ -157,7 +157,7 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 	
 	private void setMaxAllowedBandwidthUsagePercentage(JSONArray args, CallbackContext callbackContext) throws JSONException
 	{
-		final long maxPercentage = args.getInt(0);
+		final int maxPercentage = args.getInt(0);
 		TapsellExtraPlatforms.setMaxAllowedBandwidthUsagePercentage(cordova.getActivity(), maxPercentage);
 		callbackContext.success();
 	}
