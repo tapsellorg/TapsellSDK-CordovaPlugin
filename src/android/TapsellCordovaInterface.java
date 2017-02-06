@@ -212,14 +212,15 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 	{
 		final String zoneId = args.getString(0);
 		boolean isAdReady = TapsellExtraPlatforms.isAdReadyToShow(cordova.getActivity(),zoneId);
-		if(isAdReady)
-		{
-			callbackContext.success();
-		}
-		else
-		{
-			callbackContext.error("No ad is ready.");
-		}
+		JSONObject result = new JSONObject();
+		try{
+			result.put("isAdReady",isAdReady);
+			PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
+			resultado.setKeepCallback(true);
+			callbackContext.sendPluginResult(resultado);
+		} catch (Exception e) {
+            e.printStackTrace();
+        }
 	}
 	
 	private void getVersion(JSONArray args, CallbackContext callbackContext) throws JSONException

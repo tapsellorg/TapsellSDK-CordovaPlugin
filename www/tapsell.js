@@ -36,7 +36,7 @@ module.exports = {
 	setMaxAllowedBandwidthUsagePercentage: function( maxPercentage ) {
 		cordova.exec(null, null, "TapsellCordovaInterface", "setMaxAllowedBandwidthUsagePercentage", [ maxPercentage ]);
 	},
-	clearBandwidthUsageConstrains: function( maxBpsSpeed ) {
+	clearBandwidthUsageConstrains: function( ) {
 		cordova.exec(null, null, "TapsellCordovaInterface", "clearBandwidthUsageConstrains", [ 0 ]);
 	},
 	startIntent: function(actionType,uri,isService,requestCode,packageName) {
