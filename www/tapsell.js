@@ -16,7 +16,10 @@ module.exports = {
 		cordova.exec(callback, null, "TapsellCordovaInterface", "isAdReadyToShow", [ zoneId ]);		
 	},
 	showAd: function(adId,back_disabled,immersive_mode,rotation_mode, show_dialog, callback) {
-		cordova.exec(callback, null, "TapsellCordovaInterface", "showAd", [ adId,back_disabled,immersive_mode,rotation_mode,show_dialog ]);		
+		cordova.exec(null, null, "TapsellCordovaInterface", "showAd", [ adId,back_disabled,immersive_mode,rotation_mode,show_dialog ]);		
+	},
+	setRewardCallback: function(callback) {
+		cordova.exec(callback, null, "TapsellCordovaInterface", "setRewardCallback", [ 0 ]);
 	},
 	getVersion: function( callback ) {
 		cordova.exec(callback, null, "TapsellCordovaInterface", "getVersion", [ 0 ]);		
