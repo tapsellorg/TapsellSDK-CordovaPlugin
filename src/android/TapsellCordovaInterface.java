@@ -291,7 +291,7 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 	{
 		if(cordova.getActivity()!=null && cordova.getActivity() instanceof TapsellAdActivity)
 		{
-			((TapsellAdActivity)(cordova.getActivity())).onBackPressed();
+			((TapsellAdActivity)(cordova.getActivity())).onClose();
 		}
 	}
 	
