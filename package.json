@@ -1,11 +1,12 @@
 {
   "name": "tapsell-v3-cordova-plugin",
-  "version": "3.0.38",
+  "version": "3.0.39",
   "description": "Tapsell sdk v3 for cordova",
   "cordova": {
     "id": "tapsell-v3-cordova-plugin",
     "platforms": [
-      "android"
+      "android",
+      "ios"
     ]
   },
   "repository": {
@@ -17,7 +18,8 @@
     "video",
     "ad",
     "ecosystem:cordova",
-    "cordova-android"
+    "cordova-android",
+    "cordova-ios"
   ],
   "engines": [
     {

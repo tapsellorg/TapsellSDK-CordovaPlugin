@@ -12,9 +12,6 @@ module.exports = {
 	requestAd: function(zoneId, icCached, callback) {
 		cordova.exec(callback, null, "TapsellCordovaInterface", "requestAd", [ zoneId , icCached]);		
 	},
-	isAdReadyToShow: function(zoneId, callback) {
-		cordova.exec(callback, null, "TapsellCordovaInterface", "isAdReadyToShow", [ zoneId ]);		
-	},
 	showAd: function(adId,back_disabled,immersive_mode,rotation_mode, show_dialog, callback) {
 		cordova.exec(null, null, "TapsellCordovaInterface", "showAd", [ adId,back_disabled,immersive_mode,rotation_mode,show_dialog ]);		
 	},
