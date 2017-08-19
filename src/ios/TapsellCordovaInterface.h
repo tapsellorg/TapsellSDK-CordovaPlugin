@@ -6,6 +6,7 @@
 
 @property(nonatomic, strong, readwrite) NSMutableDictionary<NSString *, NSString *> * zoneCallBackIds;
 @property(nonatomic, strong, readwrite) CDVInvokedUrlCommand * rewardCallback;
+@property(nonatomic, strong, readwrite) CDVInvokedUrlCommand * showCallback;
 
 - (void)initialize:(CDVInvokedUrlCommand*)command;
 - (void)getVersion:(CDVInvokedUrlCommand*)command;

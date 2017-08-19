@@ -37,6 +37,8 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 	private final Map<String,CallbackContext> zoneCallbacks = Collections.synchronizedMap(new WeakHashMap<String, CallbackContext>());
 
 	private CallbackContext defaultZoneCallback=null;
+
+	private CallbackContext showAdCallback=null;
 	
 	private CallbackContext adRewardCallback=null;
 	
@@ -250,6 +252,7 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 		final int rotation_mode = args.getInt(3);
 		final boolean show_dialog = args.getBoolean(4);
 		TapsellExtraPlatforms.showAd(cordova.getActivity(),adId,back_disabled,immersive_mode,rotation_mode, show_dialog);
+        showAdCallback = callbackContext;
 		//adRewardCallback = callbackContext;
 	}
 	
@@ -466,6 +469,43 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 			e.printStackTrace();
 		}
     }
-	
+
+    @Override
+    public void onOpened(String zoneId, String adId) {
+        JSONObject result = new JSONObject();
+        try{
+            result.put("action","onOpened");
+            result.put("zoneId",zoneId);
+            result.put("adId",adId);
+            PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
+            resultado.setKeepCallback(true);
+            if(showAdCallback!=null)
+            {
+                showAdCallback.sendPluginResult(resultado);
+            }
+        }catch(JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onClosed(String zoneId, String adId) {
+        JSONObject result = new JSONObject();
+        try{
+            result.put("action","onClosed");
+            result.put("zoneId",zoneId);
+            result.put("adId",adId);
+            PluginResult resultado = new PluginResult(PluginResult.Status.OK, result);
+            resultado.setKeepCallback(true);
+            if(showAdCallback!=null)
+            {
+                showAdCallback.sendPluginResult(resultado);
+            }
+        }catch(JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
 
 }

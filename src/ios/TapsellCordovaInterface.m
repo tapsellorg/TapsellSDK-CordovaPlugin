@@ -10,12 +10,12 @@
 		{
 			if([[self.zoneCallBackIds allKeys] containsObject:ad.zoneId])
 			{
-				NSMutableDictionary dict = [NSMutableDictionary dictionary];
+				NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 				[dict setValue:@"onAdAvailable" forKey:@"action"];
 				[dict setValue:ad.zoneId forKey:@"zoneId"];
 				[dict setValue:[ad getId] forKey:@"adId"];
 				CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dict];	
-				[self.commandDelegate sendPluginResult:pluginResult callbackId:[self.zoneCallBackIds valueForKey:ad.zoneId].callbackId];
+				[self.commandDelegate sendPluginResult:pluginResult callbackId:[self.zoneCallBackIds valueForKey:ad.zoneId]];
 				//[self.zoneCallBackIds removeObjectForKey:ad.zoneId];
 			}
 		}
@@ -24,11 +24,11 @@
 		{
 			if([[self.zoneCallBackIds allKeys] containsObject:zoneId])
 			{
-				NSMutableDictionary dict = [NSMutableDictionary dictionary];
+				NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 				[dict setValue:@"onNoAdAvailable" forKey:@"action"];
 				[dict setValue:zoneId forKey:@"zoneId"];
 				CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dict];	
-				[self.commandDelegate sendPluginResult:pluginResult callbackId:[self.zoneCallBackIds valueForKey:zoneId].callbackId];
+				[self.commandDelegate sendPluginResult:pluginResult callbackId:[self.zoneCallBackIds valueForKey:zoneId]];
 				//[self.zoneCallBackIds removeObjectForKey:zoneId];
 			}
 		}
@@ -37,12 +37,12 @@
 		{
 			if([[self.zoneCallBackIds allKeys] containsObject:zoneId])
 			{
-				NSMutableDictionary dict = [NSMutableDictionary dictionary];
+				NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 				[dict setValue:@"onError" forKey:@"action"];
 				[dict setValue:zoneId forKey:@"zoneId"];
 				[dict setValue:error forKey:@"error"];
 				CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dict];	
-				[self.commandDelegate sendPluginResult:pluginResult callbackId:[self.zoneCallBackIds valueForKey:zoneId].callbackId];
+				[self.commandDelegate sendPluginResult:pluginResult callbackId:[self.zoneCallBackIds valueForKey:zoneId]];
 				//[self.zoneCallBackIds removeObjectForKey:zoneId];
 			}
 		}
@@ -51,25 +51,50 @@
 		{
 			if([[self.zoneCallBackIds allKeys] containsObject:ad.zoneId])
 			{
-				NSMutableDictionary dict = [NSMutableDictionary dictionary];
+				NSMutableDictionary * dict = [NSMutableDictionary dictionary];
 				[dict setValue:@"onExpiring" forKey:@"action"];
 				[dict setValue:ad.zoneId forKey:@"zoneId"];
 				[dict setValue:[ad getId] forKey:@"adId"];
 				CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dict];	
-				[self.commandDelegate sendPluginResult:pluginResult callbackId:[self.zoneCallBackIds valueForKey:ad.zoneId].callbackId];
+				[self.commandDelegate sendPluginResult:pluginResult callbackId:[self.zoneCallBackIds valueForKey:ad.zoneId]];
 				//[self.zoneCallBackIds removeObjectForKey:ad.zoneId];
 			}
+		}
+	} onOpened:^(TapsellAd * _Nullable ad) {
+		if(self.showCallback != nil)
+		{
+            NSMutableDictionary * dict = [NSMutableDictionary dictionary];
+			[dict setValue:@"onOpened" forKey:@"action"];
+			[dict setValue:ad.zoneId forKey:@"zoneId"];
+			[dict setValue:[ad getId] forKey:@"adId"];
+			CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dict];	
+			[self.commandDelegate sendPluginResult:pluginResult callbackId:self.showCallback.callbackId];
+			//[self.showCallback removeObjectForKey:ad.zoneId];
+
+		}
+	} onClosed:^(TapsellAd * _Nullable ad) {
+		if(self.showCallback != nil)
+		{
+						NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+			[dict setValue:@"onClosed" forKey:@"action"];
+			[dict setValue:ad.zoneId forKey:@"zoneId"];
+			[dict setValue:[ad getId] forKey:@"adId"];
+			CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dict];	
+			[self.commandDelegate sendPluginResult:pluginResult callbackId:self.showCallback.callbackId];
+			self.showCallback = nil;
+			//[self.showCallback removeObjectForKey:ad.zoneId];
+
 		}
 	}];
 	[TapsellExtraPlatformsController setAdShowFinishedCallback:^(TapsellAd *ad, BOOL completed) {
 		if(self.rewardCallback != nil)
 		{
-			NSMutableDictionary dict = [NSMutableDictionary dictionary];
+			NSMutableDictionary * dict = [NSMutableDictionary dictionary];
 			[dict setValue:@"onAdShowFinished" forKey:@"action"];
 			[dict setValue:ad.zoneId forKey:@"zoneId"];
 			[dict setValue:[ad getId] forKey:@"adId"];
-			[dict setValue:completed forKey:@"completed"];
-			[dict setValue:[ad isRewardedAd] forKey:@"rewarded"];
+			[dict setValue:[NSNumber numberWithBool:completed] forKey:@"completed"];
+			[dict setValue:[NSNumber numberWithBool:[ad isRewardedAd]] forKey:@"rewarded"];
 			CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dict];	
 			[self.commandDelegate sendPluginResult:pluginResult callbackId:self.rewardCallback.callbackId];
 			//self.rewardCallback = nil;
@@ -80,7 +105,7 @@
 - (void)initialize:(CDVInvokedUrlCommand*)command
 {
     NSString* appKey = [[command arguments] objectAtIndex:0];
-    [TapsellExtraPlatformsController initializeWithAppKey:appkey];
+    [TapsellExtraPlatformsController initializeWithAppKey:appKey];
 
 	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];	
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
@@ -94,7 +119,7 @@
 
 - (void)setDebugMode:(CDVInvokedUrlCommand*)command
 {
-	BOOL* debugMode = [[command arguments] objectAtIndex:0];
+	BOOL debugMode = [[command arguments] objectAtIndex:0];
     [TapsellExtraPlatformsController setDebugMode:debugMode];
 	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];	
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
@@ -117,7 +142,7 @@
 - (void)requestAd:(CDVInvokedUrlCommand*)command
 {
 	NSString* zoneId = [[command arguments] objectAtIndex:0];
-	BOOL* debugMode = [[command arguments] objectAtIndex:1];
+	BOOL cached = [[command arguments] objectAtIndex:1];
 	[TapsellExtraPlatformsController requestAdForZone:zoneId isCached:cached];
 	if(self.zoneCallBackIds == nil)
 	{
@@ -138,12 +163,13 @@
 	[showOptions setBackDisabled:backDisabled];
     [showOptions setShowDialoge:showDialog];
     [showOptions setOrientationNumber:rotationMode];
-    [[TapsellExtraPlatformsController sharedInstance] showAd:adId withOptions:showOptions]
+    [[TapsellExtraPlatformsController sharedInstance] showAd:adId withOptions:showOptions];
+	_showCallback = command;
 }
 
 - (void)setRewardCallback:(CDVInvokedUrlCommand*)command
 {
-	self.rewardCallback = command;
+	_rewardCallback = command;
 }
 
 // Unsupported functions
