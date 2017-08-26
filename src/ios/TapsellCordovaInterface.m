@@ -216,4 +216,10 @@
 	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
+- (void)dismiss:(CDVInvokedUrlCommand*)command
+{
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Not Supported"];
+	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
 @end

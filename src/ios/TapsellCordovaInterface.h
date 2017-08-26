@@ -24,6 +24,7 @@
 - (void)startIntent:(CDVInvokedUrlCommand*)command;
 - (void)close:(CDVInvokedUrlCommand*)command;
 - (void)replay:(CDVInvokedUrlCommand*)command;
+- (void)dismiss:(CDVInvokedUrlCommand*)command;
 
 
 

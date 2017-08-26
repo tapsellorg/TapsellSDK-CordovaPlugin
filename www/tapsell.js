@@ -47,5 +47,8 @@ module.exports = {
 	},
 	replay: function() {
 		cordova.exec(null,null,"TapsellCordovaInterface","replay",[ 0 ]);
+	},
+	dismiss: function() {
+		cordova.exec(null,null,"TapsellCordovaInterface","dismiss",[ 0 ]);
 	}
 };

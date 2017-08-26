@@ -116,6 +116,10 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 			replay(args, callbackContext);
 			return true;
 		}
+		else if (action.equals("dismiss")) {
+			dismiss(args, callbackContext);
+			return true;
+		}
 	    return false;
 	}
 	
@@ -295,6 +299,14 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 		if(cordova.getActivity()!=null && cordova.getActivity() instanceof TapsellAdActivity)
 		{
 			((TapsellAdActivity)(cordova.getActivity())).onClose();
+		}
+	}
+	
+	private void dismiss(JSONArray args, CallbackContext callbackContext) throws JSONException
+	{
+		if(cordova.getActivity()!=null && cordova.getActivity() instanceof TapsellAdActivity)
+		{
+			((TapsellAdActivity)(cordova.getActivity())).onDismiss();
 		}
 	}
 	
