@@ -59,10 +59,6 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 	    	requestAd(args, callbackContext);
 		    return true;
 		}
-		else if (action.equals("isAdReadyToShow")) {
-			isAdReadyToShow(args, callbackContext);
-		    return true;
-		}
 		else if (action.equals("getVersion")) {
 			getVersion(args, callbackContext);
 		    return true;
@@ -97,6 +93,10 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 		}
 		else if (action.equals("setAutoHandlePermissions")) {
 			setAutoHandlePermissions(args, callbackContext);
+			return true;
+		}
+		else if (action.equals("setPermissionHandlerConfig")) {
+			setPermissionHandlerConfig(args, callbackContext);
 			return true;
 		}
 		else if (action.equals("setAppUserId")) {
@@ -157,15 +157,16 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 		callbackContext.success();
 	}
 	
-	private void setPermissionHandlerConfig(Context context, int permissionHandlerConfig) {
-		final boolean handle = args.getBoolean(0);
+	private void setPermissionHandlerConfig(JSONArray args, CallbackContext callbackContext) throws JSONException
+	{
+		final int permissionHandlerConfig = args.getInt(0);
 		TapsellCordova.setPermissionHandlerConfig(cordova.getActivity(), permissionHandlerConfig);
 		callbackContext.success();
     }
 	
 	private void setMaxAllowedBandwidthUsage(JSONArray args, CallbackContext callbackContext) throws JSONException
 	{
-		final long maxBpsSpeed = args.getLong(0);
+		final int maxBpsSpeed = args.getInt(0);
 		TapsellCordova.setMaxAllowedBandwidthUsage(cordova.getActivity(), maxBpsSpeed);
 		callbackContext.success();
 	}
