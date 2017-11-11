@@ -41,6 +41,17 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 	
 	private CallbackContext adRewardCallback=null;
 	
+	private int TAPSELL_TOP = 1;
+	private int TAPSELL_BOTTOM = 2;
+	private int TAPSELL_LEFT = 3;
+	private int TAPSELL_RIGHT = 4;
+	private int TAPSELL_CENTER = 5;
+	
+	private int BANNER_320x50 = 1;
+	private int BANNER_320x100 = 2;
+	private int BANNER_250x250 = 3;
+	private int BANNER_300x250 = 4;
+	
 	@Override
 	public void initialize (CordovaInterface initCordova, CordovaWebView webView) {
 		 Log.e (LOG_TAG, "initialize");
@@ -57,6 +68,10 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 		}
 		else if (action.equals("requestAd")) {
 	    	requestAd(args, callbackContext);
+		    return true;
+		}
+		else if (action.equals("requestBannerAd")) {
+	    	requestBannerAd(args, callbackContext);
 		    return true;
 		}
 		else if (action.equals("getVersion")) {
@@ -222,6 +237,32 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 			defaultZoneCallback = callbackContext;
 		}
 		TapsellCordova.requestAd(cordova.getActivity(),zoneId,isCached);
+	}
+	
+	private void requestBannerAd(JSONArray args, CallbackContext callbackContext) throws JSONException
+	{
+		String zoneId = args.getString(0);
+		int bannerType = args.getInt(1);
+		int horizontalGravity = args.getInt(2);
+		int verticalGravity = args.getInt(3);
+		
+		if(zoneId == null || (zoneId.equalsIgnoreCase("null") || zoneId.equalsIgnoreCase(""))){
+			return;
+		}
+		
+		if(bannerType == 0 || (bannerType != BANNER_320x50 && bannerType != BANNER_320x100 && bannerType != BANNER_300x250 && bannerType != BANNER_250x250)){
+			bannerType = BANNER_320x50;
+		}
+		
+		if(horizontalGravity == 0 || (horizontalGravity != TAPSELL_TOP && horizontalGravity != TAPSELL_BOTTOM)){
+			horizontalGravity = TAPSELL_BOTTOM;
+		}
+		
+		if(verticalGravity == 0 || (verticalGravity != TAPSELL_LEFT && verticalGravity != TAPSELL_CENTER && verticalGravity != TAPSELL_RIGHT)){
+			horizontalGravity = TAPSELL_CENTER;
+		}
+
+		TapsellCordova.requestBannerAd(cordova.getActivity(), zoneId, bannerType, horizontalGravity, verticalGravity);
 	}
 	
 	private void getVersion(JSONArray args, CallbackContext callbackContext) throws JSONException

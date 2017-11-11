@@ -5,9 +5,23 @@ window.tapsell_rotation_unlocked = 3;
 window.tapsell_rotation_locked_reversed_portrait = 4;
 window.tapsell_rotation_locked_reversed_landscape = 5;
 
+window.tapsell_top = 1;
+window.tapsell_bottom = 2;
+window.tapsell_left = 3;
+window.tapsell_right = 4;
+window.tapsell_center = 5;
+
+window.tapsell_banner_320x50 = 1;
+window.tapsell_banner_320x100 = 2;
+window.tapsell_banner_250x250 = 3;
+window.tapsell_banner_300x250 = 4;
+
 module.exports = {
 	initialize: function(appKey) {
 		cordova.exec(function (result) {console.log("Tapsell initialized successfully.");},null,"TapsellCordovaInterface","initialize",[appKey]);
+	},
+	requestBannerAd: function(zoneId, bannerType, horizontalGravity , verticalGravity) {
+		cordova.exec(null, null, "TapsellCordovaInterface", "requestBannerAd", [ zoneId , bannerType, horizontalGravity , verticalGravity]);		
 	},
 	requestAd: function(zoneId, icCached, callback) {
 		cordova.exec(callback, null, "TapsellCordovaInterface", "requestAd", [ zoneId , icCached]);		
