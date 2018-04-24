@@ -1,6 +1,6 @@
 {
   "name": "tapsell-v3-cordova-plugin",
-  "version": "3.0.47",
+  "version": "3.1.12",
   "description": "Tapsell sdk v3 for cordova",
   "cordova": {
     "id": "tapsell-v3-cordova-plugin",
@@ -27,7 +27,7 @@
       "version": ">=3.0.0"
     }
   ],
-  "author": "Sina Rezaei",
+  "author": "Mohammad Hadipour",
   "license": "Apache 2.0",
   "bugs": {
     "url": "https://github.com/hermamitr/TapsellSDK_v3_Cordova/issues"
