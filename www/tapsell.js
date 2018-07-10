@@ -18,7 +18,7 @@ window.tapsell_banner_300x250 = 4;
 
 module.exports = {
 	initialize: function(appKey) {
-		cordova.exec(function (result) {console.log("Tapsell initialized successfully.");},null,"TapsellCordovaInterface","initialize",[appKey]);
+		cordova.exec(function (result) {console.log("Tapsell initialized successfully.");},null,"TapsellCordovaInterface","initialize",[appKey, 3.1.13]);
 	},
 	requestBannerAd: function(zoneId, bannerType, horizontalGravity , verticalGravity) {
 		cordova.exec(null, null, "TapsellCordovaInterface", "requestBannerAd", [ zoneId , bannerType, horizontalGravity , verticalGravity]);		

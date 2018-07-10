@@ -216,7 +216,8 @@ public class TapsellCordovaInterface extends CordovaPlugin implements TapsellCor
 	private void initialize(JSONArray args, CallbackContext callbackContext) throws JSONException
 	{
 		final String appKey = args.getString(0);
-		TapsellCordova.initialize(cordova.getActivity(),appKey);
+		final String pluginVersion = args.getString(1);
+		TapsellCordova.initialize(cordova.getActivity(),appKey,pluginVersion);
 		callbackContext.success();
 	}
 	

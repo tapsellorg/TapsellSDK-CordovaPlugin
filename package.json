@@ -27,7 +27,7 @@
       "version": ">=3.0.0"
     }
   ],
-  "author": "Mohammad Hadipour",
+  "author": "Tapsell",
   "license": "Apache 2.0",
   "bugs": {
     "url": "https://github.com/hermamitr/TapsellSDK_v3_Cordova/issues"
