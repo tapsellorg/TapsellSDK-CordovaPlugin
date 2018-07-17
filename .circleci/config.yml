@@ -16,9 +16,10 @@ jobs:
       - run: cordova plugin add tapsell-v3-cordova-plugin
       - run: git add --all
       - run: git config --local user.name "circleCI"
-#      - run: echo ${SSH_KEY} > ~/.ssh/id_rsa
-#      - run: cat ~/.ssh/id_rsa
-#      - run: chmod 0400 ~/.ssh/id_rsa
+      - run: git config --local user.email "technical.tapsell@gmail.com"
+      - run: echo ${SSH_KEY} > ~/.ssh/id_rsa
+      - run: cat ~/.ssh/id_rsa
+      - run: chmod 0400 ~/.ssh/id_rsa
 #      - run: eval "$(ssh-agent -s)"
 #      - run: ssh-add ~/.ssh/id_rsa
       - run: git commit -m "updating for sdk cordova version $pluginVersion"
