@@ -10,17 +10,13 @@ jobs:
       - run: pluginVersion=${pluginVersion%% }
 #      - run: npm publish
 #      - run: curl -XGET http://answers.tapsell.ir/wp-content/plugins/versionAutomation/updateversion.php?key=$DOC_KEY&platform=cordovaPlugin&version=$pluginVersion
-      - run: ssh-add -D
-      - run: echo ${SSH_KEY} > ~/.ssh/id_rsa
-      - run: cat ~/.ssh/id_rsa
-      - run: chmod 0400 ~/.ssh/id_rsa
-      - run: git clone git@github.com:tapsellorg/TapsellSDK-CordovaSample.git
+      - run: https://github.com/tapsellorg/TapsellSDK-CordovaSample.git
       - run: cd TapsellSDK-CordovaSample
       - run: cordova plugin remove tapsell-v3-cordova-plugin
       - run: cordova plugin add tapsell-v3-cordova-plugin
       - run: git add --all
-      - run: git config --local user.name "circleCI"
-      - run: git config --local user.email "technical.tapsell@gmail.com"
+#      - run: git config --local user.name "circleCI"
+#      - run: git config --local user.email "technical.tapsell@gmail.com"
 #      - run: eval "$(ssh-agent -s)"
 #      - run: ssh-add ~/.ssh/id_rsa
       - run: git commit -m "updating for sdk cordova version $pluginVersion"
