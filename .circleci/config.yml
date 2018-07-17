@@ -31,5 +31,5 @@ workflows:
   version: 2
   deploy:
     jobs:
-      - build
+      - build:
           type: approval
