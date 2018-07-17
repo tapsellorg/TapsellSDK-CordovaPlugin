@@ -19,7 +19,7 @@ jobs:
       - run: echo ${SSH_KEY} > ~/.ssh/circleCI
       - run: chmod 0400 ~/.ssh/circleCI
       - run: eval "$(ssh-agent -s)"
-      - run: /usr/bin/ssh-add -k ~/.ssh/circleCI
+      - run: /usr/bin/ssh-add -K ~/.ssh/circleCI
       - run: git commit -m "updating for sdk cordova version $pluginVersion"
       - run: git push
       - run: cd ..
