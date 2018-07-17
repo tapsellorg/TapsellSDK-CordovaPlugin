@@ -15,7 +15,8 @@ window.tapsell_banner_320x50 = 1;
 window.tapsell_banner_320x100 = 2;
 window.tapsell_banner_250x250 = 3;
 window.tapsell_banner_300x250 = 4;
-var tapsellPluginVersion = 3.1.13;//???????
+
+var tapsellPluginVersion = "3.1.13";
 
 module.exports = {
 	initialize: function(appKey) {
