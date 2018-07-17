@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="tapsell-v3-cordova-plugin"
     version="3.1.13">
-	
+	<!--the above line should remain in line 5, always! else change newVersion script-->
     <name>Tapsell sdk v3</name>
     <description>Tapsell sdk v3 for cordova</description>
     <author>Sina Rezaei (sinarezaei1991@gmail.com)</author>	

@@ -6,4 +6,21 @@ jobs:
       
     steps:
       - checkout
-      - run: echo "hi"
+      - run: pluginVersion=$(cat www/tapsell.js | grep "tapsellPluginVersion" | cut -d'=' -f2)
+      - run: $pluginVersion=${pluginVersion## }
+      - run: $pluginVersion=${pluginVersion%% }
+      - run: npm publish
+      - run: curl -XGET http://answers.tapsell.ir/wp-content/plugins/versionAutomation/updateversion.php?key=1234567890&platform=cordovaPlugin&version=$pluginVersion
+      - run: git clone https://github.com/tapsellorg/TapsellSDK-CordovaSample.git
+      - run: cd TapsellSDK-CordovaSample
+      - run: cordova plugin remove tapsell-v3-cordova-plugin
+      - run: cordova plugin add tapsell-v3-cordova-plugin
+      - run: git add --all
+      - run: git config --local user.name "tapsellCI"
+      - run: echo ${SSH_KEY} > ~/.ssh/gitlabCI
+      - run: eval "$(ssh-agent -s)"
+      - run: ssh-add -K ~/.ssh/gitlabCI
+      - run: git commit -m "updating for sdk cordova version $pluginVersion"
+      - run: git push
+      - run: cd ..
+      - run: rm -rf TapsellSDK-CordovaSample
