@@ -10,6 +10,8 @@ jobs:
       - run: pluginVersion=${pluginVersion%% }
 #      - run: npm publish
 #      - run: curl -XGET http://answers.tapsell.ir/wp-content/plugins/versionAutomation/updateversion.php?key=$DOC_KEY&platform=cordovaPlugin&version=$pluginVersion
+      - run: pwd
+      - run: ls
       - run: ./updatesample.sh $pluginVersion
 workflows:
   version: 2
