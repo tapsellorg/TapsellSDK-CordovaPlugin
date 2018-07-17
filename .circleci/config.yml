@@ -6,7 +6,6 @@ jobs:
     branches:
       only:
         - master
-    type: approval
     steps:
       - checkout
       - run: pluginVersion=$(cat www/tapsell.js | grep "tapsellPluginVersion" | cut -d'=' -f2)
