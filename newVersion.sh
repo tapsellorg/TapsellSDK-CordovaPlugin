@@ -13,7 +13,7 @@ newLine="       <source-file src=\"src/android/tapsell-cordova-v$sdkVersion.jar\
 sed -i "/source-file src=\"src/android/tapsell-cordova-/c\ $newLine" plugin.xml
 newLine="var tapsellPluginVersion = $pluginVersion;"
 sed -i "/"tapsellPluginVersion ="/c\ $newLine" www/tapsell.js
-sed -i "5s/.*/version=\"$tapsellPluginVersion\">" plugin.xml
+sed -i "5s/.*/version=\"$tapsellPluginVersion\">/" plugin.xml
 rm package.json
 plugman createpackagejson
 git add --all
