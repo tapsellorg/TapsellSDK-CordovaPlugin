@@ -4,6 +4,7 @@ fi
 if [[ "$2" == "" ]]; then
     echo "please enter tapsell sdk version"; exit 1
 fi
+git checkout master
 pluginVersion=$1
 sdkVersion=$2
 wget https://storage.backtory.com/tapsell-server/sdk/cordova/tapsell-sdk-cordova-$sdkVersion.jar
