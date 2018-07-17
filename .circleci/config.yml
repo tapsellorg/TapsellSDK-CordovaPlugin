@@ -6,13 +6,14 @@ jobs:
     branches:
       only:
         - master
+    type: approval
     steps:
       - checkout
       - run: pluginVersion=$(cat www/tapsell.js | grep "tapsellPluginVersion" | cut -d'=' -f2)
       - run: pluginVersion=${pluginVersion## }
       - run: pluginVersion=${pluginVersion%% }
 #      - run: npm publish
-#      - run: curl -XGET http://answers.tapsell.ir/wp-content/plugins/versionAutomation/updateversion.php?key=1234567890&platform=cordovaPlugin&version=$pluginVersion
+#      - run: curl -XGET http://answers.tapsell.ir/wp-content/plugins/versionAutomation/updateversion.php?key=$DOC_KEY&platform=cordovaPlugin&version=$pluginVersion
       - run: git clone https://github.com/tapsellorg/TapsellSDK-CordovaSample.git
       - run: cd TapsellSDK-CordovaSample
       - run: cordova plugin remove tapsell-v3-cordova-plugin
