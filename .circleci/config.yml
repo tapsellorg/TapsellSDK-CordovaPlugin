@@ -5,15 +5,14 @@ jobs:
       - image: behdad222/android-sdk:v2.0.0
     steps:
       - checkout
+#            npm publish
+#            curl -XGET http://answers.tapsell.ir/wp-content/plugins/versionAutomation/updateversion.php?key=$DOC_KEY&platform=cordovaPlugin&version=$pluginVersion
       - run:
-          working_directory: ./TapsellSDK-CordovaSample
           command: |
             pluginVersion=$(cat www/tapsell.js | grep "tapsellPluginVersion" | cut -d'=' -f2)
             pluginVersion=${pluginVersion## }
             pluginVersion=${pluginVersion%% }
             echo $pluginVersion
-#            npm publish
-#            curl -XGET http://answers.tapsell.ir/wp-content/plugins/versionAutomation/updateversion.php?key=$DOC_KEY&platform=cordovaPlugin&version=$pluginVersion
             git clone git@github.com:tapsellorg/TapsellSDK-CordovaSample.git
             cd TapsellSDK-CordovaSample
             cordova plugin remove tapsell-v3-cordova-plugin
