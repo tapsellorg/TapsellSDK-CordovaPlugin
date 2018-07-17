@@ -1,7 +1,7 @@
-if [[ "$1" eq "" ]]; then
+if [[ "$1" == "" ]]; then
     echo "please enter the new version"; exit 1
 fi
-if [[ "$2" eq "" ]]; then
+if [[ "$2" == "" ]]; then
     echo "please enter tapsell sdk version"; exit 1
 fi
 pluginVersion=$1
