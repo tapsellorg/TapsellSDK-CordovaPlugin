@@ -27,3 +27,9 @@ jobs:
       - run: git push
       - run: cd ..
       - run: rm -rf TapsellSDK-CordovaSample
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - build
+          type: approval
