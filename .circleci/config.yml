@@ -12,7 +12,7 @@ jobs:
 #      - run: curl -XGET http://answers.tapsell.ir/wp-content/plugins/versionAutomation/updateversion.php?key=$DOC_KEY&platform=cordovaPlugin&version=$pluginVersion
       - run: pwd
       - run: ls -a
-      - run: ./updatesample.sh $pluginVersion
+      - run: ./updateSample.sh $pluginVersion
 workflows:
   version: 2
   deploy:
