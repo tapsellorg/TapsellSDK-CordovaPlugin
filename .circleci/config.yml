@@ -10,7 +10,6 @@ jobs:
       - run:
           command: |
             pluginVersion=$(cat www/tapsell.js | grep "var tapsellPluginVersion =" | cut -d'"' -f2)
-            echo $pluginVersion
             git clone git@github.com:tapsellorg/TapsellSDK-CordovaSample.git
             cd TapsellSDK-CordovaSample
             cordova plugin remove tapsell-v3-cordova-plugin
