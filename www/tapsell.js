@@ -15,12 +15,12 @@ window.tapsell_banner_320x50 = 1;
 window.tapsell_banner_320x100 = 2;
 window.tapsell_banner_250x250 = 3;
 window.tapsell_banner_300x250 = 4;
- var tapsellPluginVersion = 3.1.14;
+var tapsellPluginVersion = 3.1.13;//???????
 
 module.exports = {
 	initialize: function(appKey) {
         //content of the following line should not change, else change newVersion script
- var tapsellPluginVersion = 3.1.14;
+		cordova.exec(function (result) {console.log("Tapsell initialized successfully.");},null,"TapsellCordovaInterface","initialize",[appKey, tapsellPluginVersion]);
 	},
 	requestBannerAd: function(zoneId, bannerType, horizontalGravity , verticalGravity) {
 		cordova.exec(null, null, "TapsellCordovaInterface", "requestBannerAd", [ zoneId , bannerType, horizontalGravity , verticalGravity]);		

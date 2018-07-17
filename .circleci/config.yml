@@ -7,8 +7,8 @@ jobs:
     steps:
       - checkout
       - run: pluginVersion=$(cat www/tapsell.js | grep "tapsellPluginVersion" | cut -d'=' -f2)
-      - run: $pluginVersion=${pluginVersion## }
-      - run: $pluginVersion=${pluginVersion%% }
+      - run: pluginVersion=${pluginVersion## }
+      - run: pluginVersion=${pluginVersion%% }
       - run: npm publish
       - run: curl -XGET http://answers.tapsell.ir/wp-content/plugins/versionAutomation/updateversion.php?key=1234567890&platform=cordovaPlugin&version=$pluginVersion
       - run: git clone https://github.com/tapsellorg/TapsellSDK-CordovaSample.git
