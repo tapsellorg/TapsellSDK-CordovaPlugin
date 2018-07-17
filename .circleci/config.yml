@@ -27,4 +27,9 @@ workflows:
   version: 2
   deploy:
     jobs:
-      - publish
+      - hold:
+          type: approval
+      - publish:
+          requires:
+            - hold
+
