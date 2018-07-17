@@ -27,5 +27,4 @@ workflows:
   version: 2
   deploy:
     jobs:
-      - publish:
-          type: approval
+      - publish
