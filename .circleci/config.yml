@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  publish:
     docker: # See https://docs.docker.com/get-started/#docker-concepts if you are new to Docker.
       - image: behdad222/android-sdk:v2.0.0
     steps:
@@ -27,5 +27,5 @@ workflows:
   version: 2
   deploy:
     jobs:
-      - build:
+      - publish:
           type: approval
