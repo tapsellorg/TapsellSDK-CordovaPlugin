@@ -3,7 +3,9 @@ jobs:
   build:
     docker: # See https://docs.docker.com/get-started/#docker-concepts if you are new to Docker.
       - image: behdad222/android-sdk:v2.0.0
-      
+    branches:
+      only:
+        - master
     steps:
       - checkout
       - run: pluginVersion=$(cat www/tapsell.js | grep "tapsellPluginVersion" | cut -d'=' -f2)
@@ -16,8 +18,8 @@ jobs:
       - run: cordova plugin remove tapsell-v3-cordova-plugin
       - run: cordova plugin add tapsell-v3-cordova-plugin
       - run: git add --all
-      - run: git config --local user.name "tapsellCI"
-      - run: echo ${SSH_KEY} > ~/.ssh/gitlabCI
+      - run: git config --local user.name "circleCI"
+      - run: echo ${SSH_KEY} > ~/.ssh/circleCI
       - run: eval "$(ssh-agent -s)"
       - run: ssh-add -K ~/.ssh/gitlabCI
       - run: git commit -m "updating for sdk cordova version $pluginVersion"
