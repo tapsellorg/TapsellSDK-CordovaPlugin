@@ -15,8 +15,9 @@ sed -i "/source-file src=\"src/android/tapsell-cordova-/c\ $newLine" plugin.xml
 newLine="var tapsellPluginVersion = $pluginVersion;"
 sed -i "/"tapsellPluginVersion ="/c\ $newLine" www/tapsell.js
 sed -i "5s/.*/version=\"$tapsellPluginVersion\">/" plugin.xml
-rm package.json
-plugman createpackagejson
+#rm package.json
+#plugman createpackagejson
+sed -i "2s/.*/version\": "$tapsellPluginVersion\",/" package.json
 git add --all
 git commit -m "updating for plugin version $pluginVersion"
 git push
