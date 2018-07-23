@@ -1,17 +1,18 @@
 version: 2
 jobs:
-  publish:
+  build:
     docker: # See https://docs.docker.com/get-started/#docker-concepts if you are new to Docker.
       - image: behdad222/android-sdk:v2.0.0
     steps:
       - checkout
-
+  sampleUpdate:
+    docker: # See https://docs.docker.com/get-started/#docker-concepts if you are new to Docker.
+      - image: behdad222/android-sdk:v2.0.0
+    steps:
       - run:
           command: |
             pluginVersion=$(cat www/tapsell.js | grep "var tapsellPluginVersion =" | cut -d'"' -f2)
             echo $pluginVersion
-            npm publish
-            wget http://answers.tapsell.ir/wp-content/plugins/versionAutomation/updateversion.php\?key\=1234567890qwerty\&platform\=cordovaPlugin\&version\=$pluginVersion
             git clone git@github.com:tapsellorg/TapsellSDK-CordovaSample.git
             cd TapsellSDK-CordovaSample
             cordova plugin remove tapsell-v3-cordova-plugin
@@ -21,13 +22,25 @@ jobs:
             git config --local user.email "technical.tapsell@gmail.com"
             git commit -m "updating for sdk cordova version $pluginVersion"
             git push
+  docUpdate:
+    docker: # See https://docs.docker.com/get-started/#docker-concepts if you are new to Docker.
+      - image: behdad222/android-sdk:v2.0.0
+    steps:
+      - run: pluginVersion=$(cat www/tapsell.js | grep "var tapsellPluginVersion =" | cut -d'"' -f2)
+      - run: wget http://answers.tapsell.ir/wp-content/plugins/versionAutomation/updateversion.php\?key\=1234567890qwerty\&platform\=cordovaPlugin\&version\=$pluginVersion
+
+
 workflows:
   version: 2
-  deploy:
+  publish:
     jobs:
+      - build
       - hold:
           type: approval
-      - publish:
+      - docUpdate:
           requires:
             - hold
+      - sampleUpdate:
+          requires:
+            - docUpdate
 
