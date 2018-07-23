@@ -4,13 +4,13 @@
     id="tapsell-v3-cordova-plugin"
     version="3.1.13">
 	<!--the above line should remain in line 5, always! else change newVersion script-->
-    <name>Tapsell sdk v3</name>
-    <description>Tapsell sdk v3 for cordova</description>
-    <author>Sina Rezaei (sinarezaei1991@gmail.com)</author>	
+    <name>Tapsell Cordova Plugin</name>
+    <description>Tapsell Cordova Plugin</description>
+    <author>Tapsell</author>	
     <license>Apache 2.0</license>
     <keywords>tapsell,video,ad</keywords>
-    <repo>https://github.com/hermamitr/TapsellSDK_v3_Cordova</repo>
-    <issue>https://github.com/hermamitr/TapsellSDK_v3_Cordova/issues</issue>	
+    <repo>https://github.com/tapsellorg/TapsellSDK-CordovaPlugin</repo>
+    <issue>https://github.com/tapsellorg/TapsellSDK-CordovaPlugin/issues</issue>	
 	<engines>
 	    <engine name="cordova" version=">=3.0.0" />
 	</engines>
