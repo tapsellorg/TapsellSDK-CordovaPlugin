@@ -1,7 +1,7 @@
 {
   "name": "tapsell-v3-cordova-plugin",
   "version": "3.1.13",
-  "description": "Tapsell sdk v3 for cordova",
+  "description": "Tapsell Cordova Plugin",
   "cordova": {
     "id": "tapsell-v3-cordova-plugin",
     "platforms": [
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hermamitr/TapsellSDK_v3_Cordova.git"
+    "url": "git+https://github.com/tapsellorg/TapsellSDK-CordovaPlugin.git"
   },
   "keywords": [
     "tapsell",
@@ -30,7 +30,7 @@
   "author": "Tapsell",
   "license": "Apache 2.0",
   "bugs": {
-    "url": "https://github.com/hermamitr/TapsellSDK_v3_Cordova/issues"
+    "url": "https://github.com/tapsellorg/TapsellSDK-CordovaPlugin/issues"
   },
-  "homepage": "https://github.com/hermamitr/TapsellSDK_v3_Cordova#readme"
+  "homepage": "https://github.com/tapsellorg/TapsellSDK-CordovaPlugin#readme"
 }
