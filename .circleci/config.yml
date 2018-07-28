@@ -2,12 +2,18 @@ version: 2
 jobs:
   build:
     docker: # See https://docs.docker.com/get-started/#docker-concepts if you are new to Docker.
-      - image: behdad222/android-sdk:v2.0.0
+      - image: behdad222/android-sdk:v2.1.1
     steps:
       - checkout
+  npmPublish:
+      docker: # See https://docs.docker.com/get-started/#docker-concepts if you are new to Docker.
+        - image: behdad222/android-sdk:v2.1.1
+      steps:
+        - run: echo publishing to npm
+        - run: npm run ci-publish || true
   sampleUpdate:
     docker: # See https://docs.docker.com/get-started/#docker-concepts if you are new to Docker.
-      - image: behdad222/android-sdk:v2.0.0
+      - image: behdad222/android-sdk:v2.1.1
     steps:
       - run:
           command: |
@@ -24,7 +30,7 @@ jobs:
             git push
   docUpdate:
     docker: # See https://docs.docker.com/get-started/#docker-concepts if you are new to Docker.
-      - image: behdad222/android-sdk:v2.0.0
+      - image: behdad222/android-sdk:v2.1.1
     steps:
       - run: pluginVersion=$(cat www/tapsell.js | grep "var tapsellPluginVersion =" | cut -d'"' -f2)
       - run: wget http://answers.tapsell.ir/wp-content/plugins/versionAutomation/updateversion.php\?key\=1234567890qwerty\&platform\=cordovaPlugin\&version\=$pluginVersion
@@ -37,9 +43,12 @@ workflows:
       - build
       - hold:
           type: approval
-      - docUpdate:
+      - npmPublish:
           requires:
             - hold
+      - docUpdate:
+          requires:
+            - npmPublish
       - sampleUpdate:
           requires:
             - docUpdate
