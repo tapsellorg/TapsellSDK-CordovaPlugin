@@ -9,7 +9,9 @@ jobs:
       docker: # See https://docs.docker.com/get-started/#docker-concepts if you are new to Docker.
         - image: behdad222/android-sdk:v2.1.1
       steps:
-        - run: echo publishing to npm
+        - run: echo "installing ci-publish"
+        - run: npm install --save-dev ci-publish
+        - run: echo "publishing to npm"
         - run: npm run ci-publish || true
   sampleUpdate:
     docker: # See https://docs.docker.com/get-started/#docker-concepts if you are new to Docker.
