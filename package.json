@@ -1,6 +1,5 @@
 {
   "version": "3.1.16",
-  "name": "tapsell-v3-cordova-plugin",
   "description": "Tapsell Cordova Plugin",
   "cordova": {
     "id": "tapsell-v3-cordova-plugin",
@@ -32,5 +31,6 @@
   "bugs": {
     "url": "https://github.com/tapsellorg/TapsellSDK-CordovaPlugin/issues"
   },
+  "name": "tapsell-v3-cordova-plugin",
   "homepage": "https://github.com/tapsellorg/TapsellSDK-CordovaPlugin#readme"
 }
