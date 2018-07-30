@@ -17,7 +17,7 @@ echo "replaced jar"
 newLine="       <source-file src=\"src/android/tapsell-cordova-v$sdkVersion.jar\" target-dir=\"libs\" />"
 sed -i "/source-file src=\"src\/android\/tapsell-cordova-v/c\ $newLine" plugin.xml
 echo "updated plugin.xml"
-newLine="var tapsellPluginVersion = $pluginVersion;"
+newLine="var tapsellPluginVersion = "$pluginVersion";"
 sed -i "/tapsellPluginVersion = /c\ $newLine" www/tapsell.js
 echo "updated www/tapsell.js"
 sed -i "5s/.*/    version=\"$pluginVersion\">/" plugin.xml
