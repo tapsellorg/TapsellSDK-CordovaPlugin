@@ -8,6 +8,7 @@ jobs:
         - checkout
         - run:
             command: | 
+              npm cache clean --force
               echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
               npm publish .
 
