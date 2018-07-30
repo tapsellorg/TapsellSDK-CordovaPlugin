@@ -1,5 +1,5 @@
 {
-  "version": "3.1.14",
+  "version": "3.1.15",
   "description": "Tapsell Cordova Plugin",
   "cordova": {
     "id": "tapsell-v3-cordova-plugin",
