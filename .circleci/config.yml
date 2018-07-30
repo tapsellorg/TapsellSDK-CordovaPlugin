@@ -1,13 +1,9 @@
 version: 2
 jobs:
-  build:
-    docker: # See https://docs.docker.com/get-started/#docker-concepts if you are new to Docker.
-      - image: behdad222/android-sdk:v2.1.1
-    steps:
-      - checkout
   npmPublish:
       docker: # See https://docs.docker.com/get-started/#docker-concepts if you are new to Docker.
         - image: behdad222/android-sdk:v2.1.1
+        
       steps:
         - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
         - run: npm publish
@@ -15,6 +11,7 @@ jobs:
   sampleUpdate:
     docker: # See https://docs.docker.com/get-started/#docker-concepts if you are new to Docker.
       - image: behdad222/android-sdk:v2.1.1
+      
     steps:
       - run:
           command: |
@@ -29,9 +26,12 @@ jobs:
             git config --local user.email "technical.tapsell@gmail.com"
             git commit -m "updating for sdk cordova version $pluginVersion"
             git push
+            
+            
   docUpdate:
     docker: # See https://docs.docker.com/get-started/#docker-concepts if you are new to Docker.
       - image: behdad222/android-sdk:v2.1.1
+      
     steps:
       - run: pluginVersion=$(cat www/tapsell.js | grep "var tapsellPluginVersion =" | cut -d'"' -f2)
       - run: wget http://answers.tapsell.ir/wp-content/plugins/versionAutomation/updateversion.php\?key\=1234567890qwerty\&platform\=cordovaPlugin\&version\=$pluginVersion
@@ -41,16 +41,18 @@ workflows:
   version: 2
   publish:
     jobs:
-      - build
       - hold:
           type: approval
+          
       - npmPublish:
           requires:
             - hold
+            
       - docUpdate:
           requires:
             - npmPublish
+            
       - sampleUpdate:
           requires:
-            - docUpdate
+            - npmPublish
 
