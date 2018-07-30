@@ -9,8 +9,8 @@ jobs:
         - run:
             command: | 
               echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
-              npm whoami
               npm publish .
+
 
   sampleUpdate:
     docker: # See https://docs.docker.com/get-started/#docker-concepts if you are new to Docker.
@@ -39,8 +39,10 @@ jobs:
       
     steps:
       - checkout
-      - run: pluginVersion=$(cat www/tapsell.js | grep "var tapsellPluginVersion =" | cut -d'"' -f2)
-      - run: wget http://answers.tapsell.ir/wp-content/plugins/versionAutomation/updateversion.php\?key\=1234567890qwerty\&platform\=cordovaPlugin\&version\=$pluginVersion
+      - run:
+          command: |
+            pluginVersion=$(cat www/tapsell.js | grep "var tapsellPluginVersion =" | cut -d'"' -f2)
+            wget http://answers.tapsell.ir/wp-content/plugins/versionAutomation/updateversion.php\?key\=1234567890qwerty\&platform\=cordovaPlugin\&version\=$pluginVersion
 
 
 workflows:
