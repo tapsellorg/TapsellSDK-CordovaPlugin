@@ -26,4 +26,4 @@ sed -i "2s/.*/  \"version\": \"$pluginVersion\",/" package.json
 echo "updated package.json"
 git add --all
 git commit -m "updating for plugin version $pluginVersion"
-git push
+#git push
