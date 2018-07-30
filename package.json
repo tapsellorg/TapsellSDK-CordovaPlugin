@@ -32,8 +32,5 @@
     "url": "https://github.com/tapsellorg/TapsellSDK-CordovaPlugin/issues"
   },
   "homepage": "https://github.com/tapsellorg/TapsellSDK-CordovaPlugin#readme",
-  "scripts": {
-    "ci-publish": "ci-publish"
-  },
   "name": "tapsell-v3-cordova-plugin"
 }
