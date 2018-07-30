@@ -6,6 +6,7 @@ jobs:
         
       steps:
         - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+        - run: ls
         - run: npm publish .
 
   sampleUpdate:
