@@ -7,7 +7,6 @@ jobs:
       <<: *defaults
       steps:
         - checkout
-        - run : pwd && ls
         - run: npm install
         - run:
             name: Authenticate with registry
