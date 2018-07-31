@@ -1,25 +1,26 @@
 version: 2
+defaults: &defaults
+  docker:
+    - image: behdad222/android-sdk:v2.1.1
 jobs:
   npmPublish:
-      docker: # See https://docs.docker.com/get-started/#docker-concepts if you are new to Docker.
-        - image: behdad222/android-sdk:v2.1.1
-        
+      <<: *defaults
       steps:
         - checkout
+        - run : echo pwd && echo ls
+        - run: npm install
         - run:
-            command: | 
-              npm install -g npm
-              npm cache clean --force
+            name: test
+            command: npm test
         - run:
-            command: | 
-              echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
-              npm publish .
-
+            name: Authenticate with registry
+            command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
+        - run:
+            name: Publish package
+            command: npm publish
 
   sampleUpdate:
-    docker: # See https://docs.docker.com/get-started/#docker-concepts if you are new to Docker.
-      - image: behdad222/android-sdk:v2.1.1
-      
+    <<: *defaults
     steps:
       - checkout
       - run:
@@ -35,12 +36,9 @@ jobs:
             git config --local user.email "technical.tapsell@gmail.com"
             git commit -m "updating for sdk cordova version $pluginVersion"
             git push
-            
-            
+
   docUpdate:
-    docker: # See https://docs.docker.com/get-started/#docker-concepts if you are new to Docker.
-      - image: behdad222/android-sdk:v2.1.1
-      
+    <<: *defaults
     steps:
       - checkout
       - run:
