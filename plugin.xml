@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="tapsell-v3-cordova-plugin"
-    version="3.1.17">
+    version="3.1.18">
 	<!--the above line should remain in line 5, always! else change newVersion script-->
     <name>Tapsell Cordova Plugin</name>
     <description>Tapsell Cordova Plugin</description>
