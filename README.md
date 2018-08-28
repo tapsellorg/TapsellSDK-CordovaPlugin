@@ -1,5 +1,6 @@
+[![npm version](https://badge.fury.io/js/tapsell-v3-cordova-plugin.svg)](https://badge.fury.io/js/tapsell-v3-cordova-plugin)
 <div dir="rtl">
-<h1>مستندات راه‌اندازی تبلیغات تپسل در Cordova</h1>
+<h1>مستندات راه‌اندازی تبلیغات تپسل در Cordova</h1> 
 &nbsp; (نسخه پلاگین: ۳.۰.۴۵ – نسخه اندروید: ۳.۰.۳۶ – نسخه iOS:
 <span style="color: #ffffff;">ـ</span>۳.۰.۵ ) توجه پلاگین تپسل، در نسخه‌های
 ۳.۰.۰ و بالاتر cordova قابل استفاده است. اگر نسخه cordova شما خارج از این محدوده باشد، امکان استفاده از این پلاگین را نخواهید
